@@ -13,9 +13,12 @@ import java.util.List;
 @Data
 public class User {
 
+    public User() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Size(min=3, max=50)
     private String name;
@@ -31,6 +34,7 @@ public class User {
     @Column (name = "created_at")
     private Calendar createdAt;
 
+    @Column (name = "role")
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
