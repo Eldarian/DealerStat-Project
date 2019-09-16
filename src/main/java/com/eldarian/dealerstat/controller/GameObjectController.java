@@ -14,7 +14,7 @@ public class GameObjectController {
     public void getObject() {}
 
     @GetMapping("/my")
-    public void getUsersObject() {}
+    public void getUsersObjects() {}
 
     @DeleteMapping("/object/{id}")
     public void deleteObject() {}

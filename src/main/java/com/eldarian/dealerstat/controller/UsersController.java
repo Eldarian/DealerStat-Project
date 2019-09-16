@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("traders")
-public class TradersController {
+public class UsersController {
 
     @Autowired
     UserService userService;
@@ -22,13 +22,16 @@ public class TradersController {
 
     @GetMapping
     public String listUsers(ModelMap model) {
+        if (userService.findAllUsers().size() == 0) return "empty";
         List<User> users = userService.findAllUsers();
         model.addAttribute("users", users);
         return "allusers";
     }
 
     @PostMapping
-    public void postUser() {}
+    public void postUser(@RequestBody User user) {
+        userService.saveUser(user);
+    }
 
     @PutMapping
     public void putUser() {}

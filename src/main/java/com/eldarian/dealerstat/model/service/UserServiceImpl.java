@@ -2,10 +2,12 @@ package com.eldarian.dealerstat.model.service;
 
 import com.eldarian.dealerstat.model.entities.User;
 import com.eldarian.dealerstat.model.repository.UserRepository;
+import com.sun.javaws.jnl.RContentDesc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("userService")
@@ -20,7 +22,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAllUsers() {
-        return repo.findAll();
+        List<User> userList = new ArrayList<>();
+        repo.findAll().forEach(userList::add);
+        if (userList.size() == 0) {
+            userList.add(new User());
+        };
+        return userList;
     }
 
     public void saveUser(User user) {
