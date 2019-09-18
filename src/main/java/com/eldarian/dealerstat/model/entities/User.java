@@ -1,6 +1,8 @@
 package com.eldarian.dealerstat.model.entities;
 
 import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,7 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 
 @Entity
-@Table (name="User")
+@Table (name="user")
 @Data
 public class User {
 
@@ -17,8 +19,9 @@ public class User {
     }
 
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long userId;
 
     @Size(min=3, max=50)
     private String name;
@@ -30,20 +33,29 @@ public class User {
     @Size(min=8, max=20)
     private String email;
 
-    @Size(min=8, max=20)
     @Column (name = "created_at")
     private Calendar createdAt;
 
     @Column (name = "role")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<GameObject> gameObjects;
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(
+            name = "user_has_gameObject",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "gameObject_id"))
+    List<GameObject> gameObjects;
+
+    @OneToMany (mappedBy = "author")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Comment> comments;
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" +     id +
+                "id=" + userId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", createdAt=" + createdAt +

@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class GameObjectController {
     @PostMapping("/object")
-    public void postObject() {}
+    public void postObject() {
+
+    }
 
     @PutMapping("/object")
     public void updateObject() {}

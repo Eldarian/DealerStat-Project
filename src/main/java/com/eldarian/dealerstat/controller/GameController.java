@@ -12,7 +12,9 @@ public class GameController {
     public void getGameList() {}
 
     @PostMapping ("games")
-    public void postGame() {}
+    public void postGame() {
+
+    }
 
     @PutMapping("/games/{id}")
     public void updateGame() {}

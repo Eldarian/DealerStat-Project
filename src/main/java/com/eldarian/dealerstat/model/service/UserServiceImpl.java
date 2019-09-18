@@ -4,11 +4,13 @@ import com.eldarian.dealerstat.model.entities.User;
 import com.eldarian.dealerstat.model.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service("userService")
@@ -18,9 +20,9 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         log.info("IN UserServiceImpl findById {}", id);
-        return userRepository.findById(id).get();
+        return userRepository.findById(id);
     }
 
     @Override
@@ -41,12 +43,13 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    /*public void updateUser(User user) {
-        userRepository.save(user);
-        User entity = userRepository.findById(user.getId()).get();
-        if(entity!=null) {
-            entity.setName(user.getName());
-            entity.setCreatedAt(user.getCreatedAt());
+    public HttpStatus updateUser(User user, Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (!userOptional.isPresent()) {
+            return HttpStatus.NOT_FOUND;
         }
-    }*/
+        user.setUserId(id);
+        userRepository.save(user);
+        return HttpStatus.OK;
+    }
 }
