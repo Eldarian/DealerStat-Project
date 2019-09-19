@@ -1,5 +1,6 @@
 package com.eldarian.dealerstat.model.entities;
 
+import lombok.Data;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Data
 public class Game {
     @Id
     @Column(name = "game_id")

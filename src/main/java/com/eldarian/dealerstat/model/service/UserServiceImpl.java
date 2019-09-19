@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public HttpStatus updateUser(User user, Long id) {
+        log.info("IN UserServiceImpl updateUser {}", id);
         Optional<User> userOptional = userRepository.findById(id);
         if (!userOptional.isPresent()) {
             return HttpStatus.NOT_FOUND;

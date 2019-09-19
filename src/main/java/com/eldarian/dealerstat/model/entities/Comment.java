@@ -1,9 +1,12 @@
 package com.eldarian.dealerstat.model.entities;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Calendar;
 
 @Entity
+@Data
 public class Comment {
 
     @Id
@@ -23,5 +26,9 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name="user_id")
     private User author;
+
+    @ManyToOne
+    @JoinColumn(name="gameObject_id")
+    private User gameObject;
 
 }

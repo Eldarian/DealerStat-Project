@@ -1,5 +1,6 @@
 package com.eldarian.dealerstat.model.entities;
 
+import lombok.Data;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "gameObject")
+@Data
 public class GameObject {
     @Id
     @Column(name="gameObject_id")
@@ -22,10 +24,6 @@ public class GameObject {
             joinColumns = @JoinColumn(name = "gameObject_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> authors;
-
-    @ManyToOne
-    @JoinColumn(name = "game_id")
-    private Game game;
 
     @Column
     private String title;
@@ -43,6 +41,12 @@ public class GameObject {
     @Column
     private Calendar updatedAt;
 
+    @OneToMany (mappedBy = "gameObject")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Comment> comments;
 
+    @ManyToOne
+    @JoinColumn(name = "game_id")
+    private Game game;
 
 }
