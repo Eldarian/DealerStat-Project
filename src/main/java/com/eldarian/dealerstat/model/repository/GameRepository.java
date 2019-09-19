@@ -1,7 +1,11 @@
 package com.eldarian.dealerstat.model.repository;
 
 import com.eldarian.dealerstat.model.entities.Game;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface GameRepository extends JpaRepository<Game, Long> {
+import java.util.List;
+
+@Repository
+public interface GameRepository extends CommonRepository<Game> {
+    Game findByName(String name);
 }

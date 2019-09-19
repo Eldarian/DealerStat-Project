@@ -1,23 +1,17 @@
 package com.eldarian.dealerstat.controller;
 
+import com.eldarian.dealerstat.model.entities.GameObject;
+import com.eldarian.dealerstat.model.service.GameObjectService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class GameObjectController {
-    @PostMapping("/object")
-    public void postObject() {
+@RequestMapping("/objects")
+public class GameObjectController extends AbstractController<GameObject, GameObjectService> {
 
+    public GameObjectController(GameObjectService service) {
+        super(service);
     }
-
-    @PutMapping("/object")
-    public void updateObject() {}
-
-    @GetMapping("/object")
-    public void getObject() {}
 
     @GetMapping("/my")
     public void getUsersObjects() {}
-
-    @DeleteMapping("/object/{id}")
-    public void deleteObject() {}
 }

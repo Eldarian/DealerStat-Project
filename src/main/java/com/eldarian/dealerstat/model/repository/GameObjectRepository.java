@@ -1,11 +1,12 @@
 package com.eldarian.dealerstat.model.repository;
 
 import com.eldarian.dealerstat.model.entities.GameObject;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface GameObjectRepository extends JpaRepository<GameObject, Long> {
-    List<GameObject> findGameObjectsByAuthors(Long userId);
-    List<GameObject> findGameObjectsByGameGameId(Long gameId);
+@Repository
+public interface GameObjectRepository extends CommonRepository<GameObject> {
+    List<GameObject> findAllByAuthor_Id(Long id);
+    List<GameObject> findAllByGame_Id(Long Id);
 }

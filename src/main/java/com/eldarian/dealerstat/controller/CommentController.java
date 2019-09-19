@@ -1,22 +1,32 @@
 package com.eldarian.dealerstat.controller;
 
+import com.eldarian.dealerstat.model.entities.Comment;
+import com.eldarian.dealerstat.model.service.CommentService;
+import com.eldarian.dealerstat.model.service.CommonService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class CommentController {
+@RequestMapping("/comments")
+public class CommentController extends AbstractController<Comment, CommentService> {
 
-    @PostMapping("/articles/{id}/comments")
-    public void postComment() {}
+    public CommentController(CommentService service) {
+        super(service);
+    }
 
-    @GetMapping("/articles/{id}/comments")
+    @PostMapping("/{id}/comments")
+    public void postComment() {
+
+    }
+
+    @GetMapping("/{id}/comments")
     public void getComments() {}
 
-    @GetMapping("/articles/{id}/comments/{id}")
+    @GetMapping("/{id}/comments/{id}")
     public void getCommentById() {}
 
-    @DeleteMapping("/articles/{id}/comments/{id}")
+    @DeleteMapping("/{id}/comments/{id}")
     public void deleteComment() {}
 
-    @PutMapping("/articles/{id}/comments")
+    @PutMapping("/{id}/comments")
     public void updateComment() {}
 }

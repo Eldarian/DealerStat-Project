@@ -1,30 +1,20 @@
 package com.eldarian.dealerstat.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
 @Entity
 @Table(name = "gameObject")
 @Data
-public class GameObject {
-    @Id
-    @Column(name="gameObject_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long gameObjectId;
-
-    @ManyToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(
-            name = "user_has_gameObject",
-            joinColumns = @JoinColumn(name = "gameObject_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> authors;
-
+public class GameObject extends AbstractEntity{
     @Column
     private String title;
 
@@ -36,17 +26,25 @@ public class GameObject {
     private Status status;
 
     @Column
-    private Calendar createdAt;
+    private Date createdAt;
 
     @Column
-    private Calendar updatedAt;
+    private Date updatedAt;
 
     @OneToMany (mappedBy = "gameObject")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonManagedReference
     private List<Comment> comments;
 
     @ManyToOne
     @JoinColumn(name = "game_id")
+    @JsonBackReference
     private Game game;
+
+    @ManyToOne
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User author;
 
 }

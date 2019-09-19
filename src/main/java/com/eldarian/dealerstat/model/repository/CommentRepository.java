@@ -1,11 +1,12 @@
 package com.eldarian.dealerstat.model.repository;
 
 import com.eldarian.dealerstat.model.entities.Comment;
-import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface CommentRepository extends JpaRepository<Comment, Long> {
-//    List<Comment> findCommentByAuthor(Long userId);
+@Repository
+public interface CommentRepository extends CommonRepository<Comment> {
+    List<Comment> findAllByAuthor_Id(Long Id);
+    List<Comment> findAllByGameObject_Id(Long Id);
 }
