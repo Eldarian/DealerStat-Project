@@ -27,12 +27,12 @@ public class Comment extends AbstractEntity{
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    @JsonBackReference
+    @JsonBackReference(value = "user-comment")
     private User author;
 
-    @ManyToOne
+    @ManyToOne (cascade=CascadeType.ALL)
     @JoinColumn(name="gameObject_id")
-    @JsonBackReference
+    @JsonBackReference (value = "gameObject-comment")
     private GameObject gameObject;
 
 }

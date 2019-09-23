@@ -1,6 +1,7 @@
 package com.eldarian.dealerstat.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
@@ -40,12 +41,13 @@ public class User extends AbstractEntity{
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany
-    @LazyCollection(LazyCollectionOption.TRUE)
-    @JoinColumn(name = "gameObject_id")
+    @OneToMany (mappedBy = "owner")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonManagedReference(value = "user-gameObject")
     List<GameObject> gameObjects;
 
     @OneToMany (mappedBy = "author")
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonManagedReference(value = "user-comment")
     private List<Comment> comments;
 }

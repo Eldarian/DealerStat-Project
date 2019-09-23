@@ -3,11 +3,11 @@ package com.eldarian.dealerstat.model.service;
 import com.eldarian.dealerstat.model.entities.AbstractEntity;
 import com.eldarian.dealerstat.model.repository.CommonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Optional;
+
 
 public class AbstractService<E extends AbstractEntity, R extends CommonRepository<E>> {
 

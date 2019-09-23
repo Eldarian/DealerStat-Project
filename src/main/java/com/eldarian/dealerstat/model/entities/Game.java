@@ -1,5 +1,6 @@
 package com.eldarian.dealerstat.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
@@ -21,6 +22,7 @@ public class Game extends AbstractEntity{
     private String name;
 
     @OneToMany (mappedBy = "game")
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonManagedReference(value = "game-gameObject")
     private List<GameObject> gameObjects;
 }

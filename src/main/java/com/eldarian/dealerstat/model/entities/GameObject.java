@@ -1,6 +1,7 @@
 package com.eldarian.dealerstat.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
@@ -36,18 +37,19 @@ public class GameObject extends AbstractEntity{
     private Date updatedAt;
 
     @OneToMany (mappedBy = "gameObject")
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonManagedReference(value = "gameObject-comment")
     private List<Comment> comments;
 
     @ManyToOne
     @JoinColumn(name = "game_id")
-    @JsonBackReference
+    @JsonBackReference(value = "game-gameObject")
     private Game game;
 
     @ManyToOne
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonBackReference (value = "user-gameObject")
     private User owner;
 
 }

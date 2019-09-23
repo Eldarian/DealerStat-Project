@@ -1,6 +1,5 @@
 package com.eldarian.dealerstat.model.repository;
 
-import com.eldarian.dealerstat.model.entities.Comment;
 import com.eldarian.dealerstat.model.entities.GameObject;
 import org.springframework.stereotype.Repository;
 
