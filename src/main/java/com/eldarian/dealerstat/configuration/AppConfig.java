@@ -35,12 +35,10 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
         dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
         dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
         dataSource.setUsername(environment.getRequiredProperty("jdbc.username"));
         dataSource.setPassword(environment.getRequiredProperty("jdbc.password"));
-
 
         return dataSource;
     }
@@ -76,13 +74,4 @@ public class AppConfig implements WebMvcConfigurer {
 
         return properties;
     }
-
-    /*@Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("WEB-INF/views/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }*/
 }

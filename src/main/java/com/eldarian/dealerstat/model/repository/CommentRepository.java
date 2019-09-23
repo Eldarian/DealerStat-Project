@@ -9,4 +9,5 @@ import java.util.List;
 public interface CommentRepository extends CommonRepository<Comment> {
     List<Comment> findAllByAuthor_Id(Long Id);
     List<Comment> findAllByGameObject_Id(Long Id);
+    List<Comment> findAllByGameObject_Owner_Id(Long id);
 }

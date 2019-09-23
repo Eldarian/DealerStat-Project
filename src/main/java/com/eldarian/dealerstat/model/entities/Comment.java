@@ -1,14 +1,20 @@
 package com.eldarian.dealerstat.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Calendar;
 
 @Entity
-@Data
+@Table(name = "comment")
+@Getter
+@Setter
 public class Comment extends AbstractEntity{
+
+    public Comment() {
+    }
 
     @Column
     private String message;

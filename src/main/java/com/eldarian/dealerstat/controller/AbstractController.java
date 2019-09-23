@@ -32,9 +32,8 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
     }
 
     public ResponseEntity<List<E>> getAll() {
-        List<E> entitiesList = this.service.findAll();
-        if (entitiesList.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(entitiesList, HttpStatus.OK);
+        List<E> entityList = this.service.findAll();
+        return generateListResponse(entityList);
     }
 
     public ResponseEntity<E> post(@RequestBody E entity) {
@@ -54,5 +53,12 @@ public abstract class AbstractController<E extends AbstractEntity, S extends Com
     public ResponseEntity<E> delete(@PathVariable Long id) {
         service.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    protected ResponseEntity<List<E>> generateListResponse(List<E> entityList) {
+        if (entityList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(entityList, HttpStatus.OK);
     }
 }

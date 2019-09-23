@@ -2,31 +2,38 @@ package com.eldarian.dealerstat.controller;
 
 import com.eldarian.dealerstat.model.entities.Comment;
 import com.eldarian.dealerstat.model.service.CommentService;
-import com.eldarian.dealerstat.model.service.CommonService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/")
 public class CommentController extends AbstractController<Comment, CommentService> {
 
     public CommentController(CommentService service) {
         super(service);
     }
 
-    @PostMapping("/{id}/comments")
-    public void postComment() {
-
+    @GetMapping("/{authorId}/written-comments")
+    public ResponseEntity<List<Comment>> getCommentsByAuthor(@PathVariable Long authorId) {
+        List<Comment> commentList = getService().findByAuthorId(authorId);
+        return generateListResponse(commentList);
     }
 
-    @GetMapping("/{id}/comments")
-    public void getComments() {}
+    @GetMapping("{userId}/received-comments/")
+    public ResponseEntity<List<Comment>> getCommentsByGameObjectOwnerId(@PathVariable Long userId) {
+        List<Comment> commentList = getService().findByTraderId(userId);
+        return generateListResponse(commentList);
+    }
 
-    @GetMapping("/{id}/comments/{id}")
-    public void getCommentById() {}
-
-    @DeleteMapping("/{id}/comments/{id}")
-    public void deleteComment() {}
-
-    @PutMapping("/{id}/comments")
-    public void updateComment() {}
+    @PostMapping("objects/{objectId}/comments")
+    public ResponseEntity<Comment> postWithGameObject(@RequestBody Comment comment, @PathVariable Long objectId) {
+        if (comment == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        getService().saveWithGameObjectId(comment, objectId);
+        return new ResponseEntity<>(comment, HttpStatus.CREATED);
+    }
 }

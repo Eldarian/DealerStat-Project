@@ -1,20 +1,24 @@
 package com.eldarian.dealerstat.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.List;
 
 @Entity
 @Table(name = "gameObject")
-@Data
+@Getter
+@Setter
 public class GameObject extends AbstractEntity{
+
+    public GameObject() {
+    }
+
     @Column
     private String title;
 
@@ -32,8 +36,7 @@ public class GameObject extends AbstractEntity{
     private Date updatedAt;
 
     @OneToMany (mappedBy = "gameObject")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonManagedReference
+    @LazyCollection(LazyCollectionOption.TRUE)
     private List<Comment> comments;
 
     @ManyToOne
@@ -42,9 +45,9 @@ public class GameObject extends AbstractEntity{
     private Game game;
 
     @ManyToOne
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @JoinColumn(name = "user_id")
     @JsonBackReference
-    private User author;
+    private User owner;
 
 }

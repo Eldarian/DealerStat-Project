@@ -1,7 +1,8 @@
 package com.eldarian.dealerstat.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -9,25 +10,27 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.List;
 
 @Entity
 @Table (name="user")
-@Data
+@Getter
+@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends AbstractEntity{
 
     public User() {
     }
 
     @Size(min=3, max=50)
+    @Column(unique = true)
+    @NotNull
     private String name;
 
     @Size(min=8, max=20)
     @NotNull
     private String password;
 
-    @Size(min=8, max=20)
     private String email;
 
     @Column (name = "created_at")
@@ -38,24 +41,11 @@ public class User extends AbstractEntity{
     private Role role;
 
     @OneToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @JoinColumn(name = "gameObject_id")
-    @JsonManagedReference
     List<GameObject> gameObjects;
 
     @OneToMany (mappedBy = "author")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonManagedReference
+    @LazyCollection(LazyCollectionOption.TRUE)
     private List<Comment> comments;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", createdAt=" + createdAt +
-                ", role=" + role +
-                '}';
-    }
 }

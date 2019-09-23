@@ -13,5 +13,5 @@ public class GameObjectController extends AbstractController<GameObject, GameObj
     }
 
     @GetMapping("/my")
-    public void getUsersObjects() {}
+    public void getUsersObjects() {};
 }
